@@ -1,0 +1,672 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Stardew Dino Valley - Minecraft Modpack</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #0f0f23 0%, #1a1a2e 50%, #16213e 100%);
+            color: #e0e6ed;
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        /* Header */
+        header {
+            background: rgba(15, 15, 35, 0.95);
+            backdrop-filter: blur(10px);
+            position: fixed;
+            top: 0;
+            width: 100%;
+            z-index: 1000;
+            border-bottom: 2px solid #4a9eff;
+        }
+
+        nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1rem 0;
+        }
+
+        .logo {
+            font-size: 1.8rem;
+            font-weight: bold;
+            color: #4a9eff;
+            text-decoration: none;
+        }
+
+        .nav-links {
+            display: flex;
+            list-style: none;
+            gap: 2rem;
+        }
+
+        .nav-links a {
+            color: #e0e6ed;
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+
+        .nav-links a:hover {
+            color: #4a9eff;
+        }
+
+        /* Hero Section */
+        .hero {
+            height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            background: linear-gradient(rgba(0,0,0,0.4), rgba(0,0,0,0.4)), 
+                        url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 800"><defs><pattern id="stars" x="0" y="0" width="100" height="100" patternUnits="userSpaceOnUse"><circle cx="20" cy="20" r="1" fill="%23ffffff" opacity="0.3"/><circle cx="80" cy="60" r="0.5" fill="%23ffffff" opacity="0.5"/><circle cx="50" cy="80" r="0.8" fill="%234a9eff" opacity="0.4"/></pattern></defs><rect width="100%" height="100%" fill="url(%23stars)"/></svg>');
+            background-size: cover;
+            position: relative;
+        }
+
+        .hero-content h1 {
+            font-size: 4rem;
+            margin-bottom: 1rem;
+            background: linear-gradient(45deg, #4a9eff, #7b68ee, #ff6b6b);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            animation: glow 2s ease-in-out infinite alternate;
+        }
+
+        @keyframes glow {
+            from { filter: drop-shadow(0 0 20px rgba(74, 158, 255, 0.5)); }
+            to { filter: drop-shadow(0 0 30px rgba(74, 158, 255, 0.8)); }
+        }
+
+        .hero-content p {
+            font-size: 1.3rem;
+            margin-bottom: 2rem;
+            max-width: 600px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .cta-button {
+            display: inline-block;
+            padding: 15px 30px;
+            background: linear-gradient(45deg, #4a9eff, #7b68ee);
+            color: white;
+            text-decoration: none;
+            border-radius: 50px;
+            font-weight: bold;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .cta-button:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 25px rgba(74, 158, 255, 0.4);
+        }
+
+        /* Features Grid */
+        .features {
+            padding: 100px 0;
+            background: rgba(26, 26, 46, 0.8);
+        }
+
+        .features h2 {
+            text-align: center;
+            font-size: 3rem;
+            margin-bottom: 3rem;
+            color: #4a9eff;
+        }
+
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            margin-top: 2rem;
+        }
+
+        .feature-card {
+            background: linear-gradient(135deg, rgba(74, 158, 255, 0.1), rgba(123, 104, 238, 0.1));
+            padding: 2rem;
+            border-radius: 15px;
+            border: 1px solid rgba(74, 158, 255, 0.3);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .feature-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 20px 40px rgba(74, 158, 255, 0.2);
+        }
+
+        .feature-icon {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+            display: block;
+        }
+
+        .feature-card h3 {
+            color: #4a9eff;
+            margin-bottom: 1rem;
+            font-size: 1.5rem;
+        }
+
+        /* Progression System */
+        .progression {
+            padding: 100px 0;
+            background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
+        }
+
+        .progression h2 {
+            text-align: center;
+            font-size: 3rem;
+            margin-bottom: 3rem;
+            color: #ff6b6b;
+        }
+
+        .progression-path {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin: 3rem 0;
+            flex-wrap: wrap;
+            gap: 2rem;
+        }
+
+        .progression-step {
+            background: linear-gradient(135deg, rgba(255, 107, 107, 0.1), rgba(255, 165, 0, 0.1));
+            padding: 2rem;
+            border-radius: 15px;
+            border: 2px solid rgba(255, 107, 107, 0.3);
+            text-align: center;
+            flex: 1;
+            min-width: 250px;
+            position: relative;
+        }
+
+        .progression-step::after {
+            content: '→';
+            position: absolute;
+            right: -30px;
+            top: 50%;
+            transform: translateY(-50%);
+            font-size: 2rem;
+            color: #ff6b6b;
+        }
+
+        .progression-step:last-child::after {
+            display: none;
+        }
+
+        .step-number {
+            background: #ff6b6b;
+            color: white;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 1rem;
+            font-weight: bold;
+        }
+
+        /* Community Center vs Joja */
+        .choice-section {
+            padding: 100px 0;
+            background: rgba(15, 15, 35, 0.9);
+        }
+
+        .choice-section h2 {
+            text-align: center;
+            font-size: 3rem;
+            margin-bottom: 3rem;
+            color: #7b68ee;
+        }
+
+        .choice-container {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 3rem;
+            margin-top: 3rem;
+        }
+
+        .choice-card {
+            padding: 3rem;
+            border-radius: 20px;
+            text-align: center;
+            transition: transform 0.3s ease;
+        }
+
+        .choice-card:hover {
+            transform: scale(1.05);
+        }
+
+        .community-choice {
+            background: linear-gradient(135deg, rgba(76, 175, 80, 0.2), rgba(139, 195, 74, 0.2));
+            border: 2px solid #4caf50;
+        }
+
+        .joja-choice {
+            background: linear-gradient(135deg, rgba(255, 152, 0, 0.2), rgba(255, 193, 7, 0.2));
+            border: 2px solid #ff9800;
+        }
+
+        .choice-card h3 {
+            font-size: 2rem;
+            margin-bottom: 1rem;
+        }
+
+        .community-choice h3 {
+            color: #4caf50;
+        }
+
+        .joja-choice h3 {
+            color: #ff9800;
+        }
+
+        /* Wildlife Section */
+        .wildlife {
+            padding: 100px 0;
+            background: linear-gradient(135deg, #16213e 0%, #0f0f23 100%);
+        }
+
+        .wildlife h2 {
+            text-align: center;
+            font-size: 3rem;
+            margin-bottom: 3rem;
+            color: #4caf50;
+        }
+
+        .wildlife-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 2rem;
+        }
+
+        .wildlife-card {
+            background: linear-gradient(135deg, rgba(76, 175, 80, 0.1), rgba(139, 195, 74, 0.1));
+            padding: 2rem;
+            border-radius: 15px;
+            border: 1px solid rgba(76, 175, 80, 0.3);
+            text-align: center;
+        }
+
+        .wildlife-card h4 {
+            color: #4caf50;
+            margin-bottom: 1rem;
+            font-size: 1.3rem;
+        }
+
+        /* Footer */
+        footer {
+            background: #0f0f23;
+            padding: 3rem 0;
+            text-align: center;
+            border-top: 2px solid #4a9eff;
+        }
+
+        .footer-content {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+            margin-bottom: 2rem;
+        }
+
+        .footer-section h4 {
+            color: #4a9eff;
+            margin-bottom: 1rem;
+        }
+
+        .footer-section a {
+            color: #e0e6ed;
+            text-decoration: none;
+            display: block;
+            margin-bottom: 0.5rem;
+            transition: color 0.3s ease;
+        }
+
+        .footer-section a:hover {
+            color: #4a9eff;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .hero-content h1 {
+                font-size: 2.5rem;
+            }
+
+            .nav-links {
+                display: none;
+            }
+
+            .choice-container {
+                grid-template-columns: 1fr;
+            }
+
+            .progression-path {
+                flex-direction: column;
+            }
+
+            .progression-step::after {
+                content: '↓';
+                right: 50%;
+                top: 100%;
+                transform: translateX(50%);
+            }
+        }
+
+        /* Smooth Scrolling */
+        html {
+            scroll-behavior: smooth;
+        }
+
+        /* Loading Animation */
+        .loading {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: #0f0f23;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 9999;
+            transition: opacity 0.5s ease;
+        }
+
+        .loading.hidden {
+            opacity: 0;
+            pointer-events: none;
+        }
+
+        .spinner {
+            width: 50px;
+            height: 50px;
+            border: 3px solid rgba(74, 158, 255, 0.3);
+            border-top: 3px solid #4a9eff;
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+    </style>
+</head>
+<body>
+    <!-- Loading Screen -->
+    <div class="loading" id="loading">
+        <div class="spinner"></div>
+    </div>
+
+    <!-- Header -->
+    <header>
+        <nav class="container">
+            <a href="#" class="logo">🦖 Stardew Dino Valley</a>
+            <ul class="nav-links">
+                <li><a href="#features">Features</a></li>
+                <li><a href="#progression">Progression</a></li>
+                <li><a href="#choice">Community vs Joja</a></li>
+                <li><a href="#wildlife">Wildlife</a></li>
+                <li><a href="#download">Download</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="hero-content">
+            <h1>Stardew Dino Valley</h1>
+            <p>🌾 Restore an ancient community center greatly inspired by Stardew Valley. 🦖 Unearth fossils, and raise dinosaurs. 🌱 Experience farming, archaeology, and skyblock survival elements in one epic adventure!</p>
+            <a href="#features" class="cta-button">Explore the Valley</a>
+        </div>
+    </section>
+
+    <!-- Features Section -->
+    <section class="features" id="features">
+        <div class="container">
+            <h2>🌟 Core Features</h2>
+            <div class="features-grid">
+                <div class="feature-card">
+                    <span class="feature-icon">🌿</span>
+                    <h3>Skyblock Survival with Prehistoric Challenges</h3>
+                    <p>Transform skyblock with Ex Nihilo: Sequentia resource generation. Create unique island challenges while building your prehistoric paradise with automated systems and advanced tools.</p>
+                </div>
+                <div class="feature-card">
+                    <span class="feature-icon">🦖</span>
+                    <h3>Fossils & Dinosaur Revival</h3>
+                    <p>Excavate fossils, extract DNA, and breed dinosaurs using Fossils and Archeology Revival. Build enclosures, care for prehistoric creatures, and unlock the secrets of a lost world.</p>
+                </div>
+                <div class="feature-card">
+                    <span class="feature-icon">🌾</span>
+                    <h3>Farming & Fishing with Stardew Progression</h3>
+                    <p>Experience bundle-based progression with 58+ ground crops and 26+ tree crops from Croptopia. Dynamic seasons affect your farming while you work toward community restoration.</p>
+                </div>
+                <div class="feature-card">
+                    <span class="feature-icon">🗓️</span>
+                    <h3>Dynamic Seasons & Calendar</h3>
+                    <p>Live through 28-day seasons with Serene Seasons. Watch your world transform with weather effects, seasonal crops, and festival celebrations throughout the year.</p>
+                </div>
+                <div class="feature-card">
+                    <span class="feature-icon">💕</span>
+                    <h3>Relationships & Villagers</h3>
+                    <p>Build meaningful relationships with MCA Reborn's heart-based system. Give gifts, get married, start families, and become part of the community with 0-10 heart progression.</p>
+                </div>
+                <div class="feature-card">
+                    <span class="feature-icon">🐅</span>
+                    <h3>Unique Wildlife & Creatures</h3>
+                    <p>Encounter realistic and mythical wildlife with Alex's Mobs and Better Animals Plus. Build thriving ecosystems filled with both prehistoric and modern creatures.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Progression System -->
+    <section class="progression" id="progression">
+        <div class="container">
+            <h2>🎯 Progression System</h2>
+            <div class="progression-path">
+                <div class="progression-step">
+                    <div class="step-number">1</div>
+                    <h3>🏗️ Build Pelican Town</h3>
+                    <p>Create the town center, Pierre's shop, Gus's saloon, and essential buildings. Set up your community foundation.</p>
+                </div>
+                <div class="progression-step">
+                    <div class="step-number">2</div>
+                    <h3>🌱 Start Farming</h3>
+                    <p>Plant seasonal crops, set up fishing spots, and begin gathering resources for your first bundles.</p>
+                </div>
+                <div class="progression-step">
+                    <div class="step-number">3</div>
+                    <h3>📋 Complete Bundles</h3>
+                    <p>Turn in items to restore the Community Center room by room, unlocking new areas and abilities.</p>
+                </div>
+                <div class="progression-step">
+                    <div class="step-number">4</div>
+                    <h3>🦖 Discover Fossils</h3>
+                    <p>Excavate ancient remains, extract DNA, and begin your journey into prehistoric creature revival.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Community Center vs Joja Choice -->
+    <section class="choice-section" id="choice">
+        <div class="container">
+            <h2>⚖️ Choose Your Path</h2>
+            <p style="text-align: center; font-size: 1.2rem; margin-bottom: 2rem;">
+                Will you restore the Community Center through dedication and hard work, or take the corporate route with JojaMart?
+            </p>
+            <div class="choice-container">
+                <div class="choice-card community-choice">
+                    <h3>🏛️ Community Center Route</h3>
+                    <p><strong>The Traditional Path</strong></p>
+                    <ul style="text-align: left; margin: 1rem 0;">
+                        <li>🥬 <strong>Pantry Bundle</strong> → Unlock Greenhouse</li>
+                        <li>🎣 <strong>Fish Tank Bundle</strong> → Bridge to Desert</li>
+                        <li>⛏️ <strong>Boiler Room Bundle</strong> → Mine Cart System</li>
+                        <li>🪵 <strong>Crafts Room Bundle</strong> → Secret Woods Access</li>
+                        <li>💰 <strong>Vault Bundle</strong> → Bus to Desert/Quarry</li>
+                    </ul>
+                    <p><em>Restore the heart of the community through dedication and friendship.</em></p>
+                </div>
+                <div class="choice-card joja-choice">
+                    <h3>🏢 JojaMart Route</h3>
+                    <p><strong>The Corporate Path</strong></p>
+                    <ul style="text-align: left; margin: 1rem 0;">
+                        <li>💳 Pay 35,000 emeralds for Greenhouse</li>
+                        <li>💳 Pay 25,000 emeralds for Bridge</li>
+                        <li>💳 Pay 15,000 emeralds for Mine Carts</li>
+                        <li>💳 Pay 40,000 emeralds for Bus</li>
+                        <li>🏪 Convert Community Center to Warehouse</li>
+                    </ul>
+                    <p><em>Fast-track your progress with cold, hard emeralds.</em></p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Wildlife Section -->
+    <section class="wildlife" id="wildlife">
+        <div class="container">
+            <h2>🦎 Wildlife & Creatures</h2>
+            <div class="wildlife-grid">
+                <div class="wildlife-card">
+                    <h4>🦖 Prehistoric Dinosaurs</h4>
+                    <p>Revive ancient creatures from fossils. Care for T-Rex, Triceratops, Velociraptors, and more. Build sanctuaries and manage breeding programs.</p>
+                </div>
+                <div class="wildlife-card">
+                    <h4>🐺 Alex's Mobs Wildlife</h4>
+                    <p>Encounter realistic animals like bears, wolves, eagles, and exotic creatures. Each with unique behaviors and interactions.</p>
+                </div>
+                <div class="wildlife-card">
+                    <h4>🐟 Aquaculture Fish</h4>
+                    <p>90+ fish species across different biomes. Upgrade from wooden rods to neptunium gear. Master tackle boxes and bait systems.</p>
+                </div>
+                <div class="wildlife-card">
+                    <h4>🦅 Better Animals Plus</h4>
+                    <p>Enhanced animal behaviors and new species. Build ecosystems that feel alive and dynamic with improved AI.</p>
+                </div>
+                <div class="wildlife-card">
+                    <h4>🌲 Twilight Forest Bosses</h4>
+                    <p>Structured adventure progression through mystical bosses. From Naga to Ur-Ghast, each victory unlocks new areas.</p>
+                </div>
+                <div class="wildlife-card">
+                    <h4>🏚️ Enhanced Dungeons</h4>
+                    <p>Explore improved mineshafts and dungeons with YUNG's mods. Discover rare loot and face challenging encounters.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer id="download">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h4>📥 Download</h4>
+                    <a href="https://www.curseforge.com/minecraft/modpacks/stardew-dino-valley">CurseForge Page</a>
+                    <a href="#">Modrinth (Coming Soon)</a>
+                    <a href="#">Direct Download</a>
+                </div>
+                <div class="footer-section">
+                    <h4>📋 Requirements</h4>
+                    <p>Minecraft 1.18.2 - 1.20.1</p>
+                    <p>Forge 40.x - 47.x</p>
+                    <p>4GB+ RAM Recommended</p>
+                    <p>~16-22 Mods Total</p>
+                </div>
+                <div class="footer-section">
+                    <h4>🔗 Links</h4>
+                    <a href="#">Discord Community</a>
+                    <a href="#">GitHub Repository</a>
+                    <a href="#">Bug Reports</a>
+                    <a href="#">Mod List</a>
+                </div>
+                <div class="footer-section">
+                    <h4>📚 Guides</h4>
+                    <a href="#">Installation Guide</a>
+                    <a href="#">FTB Quests Setup</a>
+                    <a href="#">Community Center Guide</a>
+                    <a href="#">Fossil Hunting Tips</a>
+                </div>
+            </div>
+            <p style="margin-top: 2rem; padding-top: 2rem; border-top: 1px solid #4a9eff;">
+                &copy; 2024 Stardew Dino Valley Modpack. Built with ❤️ for the Minecraft community.
+            </p>
+        </div>
+    </footer>
+
+    <script>
+        // Loading screen
+        window.addEventListener('load', function() {
+            const loading = document.getElementById('loading');
+            setTimeout(() => {
+                loading.classList.add('hidden');
+            }, 1000);
+        });
+
+        // Smooth scrolling for navigation links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                }
+            });
+        });
+
+        // Header background on scroll
+        window.addEventListener('scroll', function() {
+            const header = document.querySelector('header');
+            if (window.scrollY > 100) {
+                header.style.background = 'rgba(15, 15, 35, 0.98)';
+            } else {
+                header.style.background = 'rgba(15, 15, 35, 0.95)';
+            }
+        });
+
+        // Intersection Observer for animations
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -50px 0px'
+        };
+
+        const observer = new IntersectionObserver(function(entries) {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.style.opacity = '1';
+                    entry.target.style.transform = 'translateY(0)';
+                }
+            });
+        }, observerOptions);
+
+        // Observe all feature cards and progression steps
+        document.querySelectorAll('.feature-card, .progression-step, .choice-card, .wildlife-card').forEach(el => {
+            el.style.opacity = '0';
+            el.style.transform = 'translateY(30px)';
+            el.style.transition = 'opacity 0.6s ease, transform 0.6s ease';
+            observer.observe(el);
+        });
+    </script>
+</body>
+</html>
